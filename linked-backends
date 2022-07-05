@@ -1,1 +1,43 @@
-
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "resourceTags": {
+            "type": "object"
+        },
+        "backendResourceId": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2021-01-15",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Web/staticSites",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourceTags')]",
+            "properties": {
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.Web/staticSites/linkedBackends",
+                    "apiVersion": "2020-12-01",
+                    "name": "[concat(parameters('name'), '/myLinkedBackend')]",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/staticSites', parameters('name'))]"
+                    ],
+                    "properties": {
+                        "backendResourceId": "[parameters('backendResourceId')]"
+                    }
+                }
+            ]
+        }
+    ]
+}
