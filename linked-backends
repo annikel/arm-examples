@@ -13,6 +13,9 @@
         },
         "backendResourceId": {
             "type": "string"
+        },
+        "backendRegion": {
+            "type": "string"
         }
     },
     "resources": [
@@ -34,7 +37,8 @@
                         "[resourceId('Microsoft.Web/staticSites', parameters('name'))]"
                     ],
                     "properties": {
-                        "backendResourceId": "[parameters('backendResourceId')]"
+                        "backendResourceId": "[parameters('backendResourceId')]",
+                        "region": "[parameters('backendRegion')]"
                     }
                 }
             ]
